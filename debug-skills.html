@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Skills Section</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <style>
+        /* Debug styles */
+        .debug-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: black;
+            color: white;
+            padding: 10px;
+            z-index: 9999;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        /* Forzar visibilidad total */
+        .skill-item,
+        .tool-item,
+        .skill-progress {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: scale(1) !important;
+            display: block !important;
+        }
+        
+        .skill-progress {
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
+        }
+        
+        .skill-item {
+            border: 2px solid red !important;
+            margin: 5px !important;
+        }
+        
+        .tool-item {
+            border: 2px solid blue !important;
+            margin: 5px !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-info">
+        <div>Debug: Skills Section</div>
+        <div>Red = skill-item</div>
+        <div>Blue = tool-item</div>
+    </div>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Habilidades Técnicas - DEBUG</h2>
+            <div class="skills-content">
+                <div class="skills-category">
+                    <h3 class="category-title">Frontend</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-html5"></i>
+                            </div>
+                            <h4 class="skill-name">HTML5</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90%" style="width: 90% !important;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-css3-alt"></i>
+                            </div>
+                            <h4 class="skill-name">CSS3</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85%" style="width: 85% !important;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-js-square"></i>
+                            </div>
+                            <h4 class="skill-name">JavaScript</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="80%" style="width: 80% !important;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-react"></i>
+                            </div>
+                            <h4 class="skill-name">React</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="75%" style="width: 75% !important;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-category">
+                    <h3 class="category-title">Backend</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-node-js"></i>
+                            </div>
+                            <h4 class="skill-name">Node.js</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="70%" style="width: 70% !important;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-php"></i>
+                            </div>
+                            <h4 class="skill-name">PHP</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="75%" style="width: 75% !important;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h4 class="skill-name">MySQL</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="70%" style="width: 70% !important;"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <h4 class="skill-name">Python</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="65%" style="width: 65% !important;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-category">
+                    <h3 class="category-title">Herramientas</h3>
+                    <div class="tools-grid">
+                        <div class="tool-item">
+                            <i class="fab fa-git-alt"></i>
+                            <span>Git</span>
+                        </div>
+                        <div class="tool-item">
+                            <i class="fab fa-github"></i>
+                            <span>GitHub</span>
+                        </div>
+                        <div class="tool-item">
+                            <i class="fas fa-code"></i>
+                            <span>VS Code</span>
+                        </div>
+                        <div class="tool-item">
+                            <i class="fab fa-figma"></i>
+                            <span>Figma</span>
+                        </div>
+                        <div class="tool-item">
+                            <i class="fas fa-terminal"></i>
+                            <span>Terminal</span>
+                        </div>
+                        <div class="tool-item">
+                            <i class="fab fa-npm"></i>
+                            <span>NPM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== DEBUG SKILLS SECTION ===');
+            
+            const skillItems = document.querySelectorAll('.skill-item');
+            const toolItems = document.querySelectorAll('.tool-item');
+            const skillBars = document.querySelectorAll('.skill-progress');
+            
+            console.log('📊 Skill items found:', skillItems.length);
+            console.log('🔧 Tool items found:', toolItems.length);
+            console.log('📈 Progress bars found:', skillBars.length);
+            
+            skillItems.forEach((item, index) => {
+                console.log(`Skill ${index}:`, {
+                    element: item,
+                    visible: item.offsetParent !== null,
+                    opacity: window.getComputedStyle(item).opacity,
+                    transform: window.getComputedStyle(item).transform
+                });
+            });
+            
+            toolItems.forEach((item, index) => {
+                console.log(`Tool ${index}:`, {
+                    element: item,
+                    visible: item.offsetParent !== null,
+                    opacity: window.getComputedStyle(item).opacity
+                });
+            });
+        });
+    </script>
+</body>
+</html>
