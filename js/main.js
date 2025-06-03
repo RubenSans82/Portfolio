@@ -95,11 +95,21 @@ function updateActiveNavLink() {
 
 function updateNavbarBackground() {
     const navbar = document.getElementById('navbar');
+    const isDarkMode = document.body.getAttribute('data-theme') === 'dark';
+    
     if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        if (isDarkMode) {
+            navbar.style.background = 'rgba(26, 32, 44, 0.98)';
+        } else {
+            navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        }
         navbar.style.backdropFilter = 'blur(15px)';
     } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        if (isDarkMode) {
+            navbar.style.background = 'rgba(26, 32, 44, 0.95)';
+        } else {
+            navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        }
         navbar.style.backdropFilter = 'blur(10px)';
     }
 }
@@ -112,9 +122,7 @@ function initializeThemeToggle() {
     // Check for saved theme preference or default to 'light'
     const currentTheme = localStorage.getItem('theme') || 'light';
     body.setAttribute('data-theme', currentTheme);
-    updateThemeIcon(currentTheme);
-
-    if (themeToggle) {
+    updateThemeIcon(currentTheme);    if (themeToggle) {
         themeToggle.addEventListener('click', function() {
             const currentTheme = body.getAttribute('data-theme');
             const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -122,6 +130,9 @@ function initializeThemeToggle() {
             body.setAttribute('data-theme', newTheme);
             localStorage.setItem('theme', newTheme);
             updateThemeIcon(newTheme);
+            
+            // Update navbar background immediately
+            updateNavbarBackground();
             
             // Add transition effect
             body.style.transition = 'background-color 0.3s ease, color 0.3s ease';
