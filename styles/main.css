@@ -509,10 +509,26 @@ body {
   height: 400px;
   object-fit: cover;
   transition: transform var(--transition-slow);
+  opacity: 1 !important;
+  visibility: visible !important;
 }
 
 .about-img-container:hover .about-img {
   transform: scale(1.05);
+}
+
+/* Forzar visibilidad de la imagen about independientemente de animaciones */
+.about-image,
+.about-img-container,
+.about-img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.about-image.appear-from-right {
+  opacity: 1 !important;
+  transform: translateX(0) !important;
 }
 
 /* ===== SKILLS SECTION ===== */

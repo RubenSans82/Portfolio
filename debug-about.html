@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug About Section</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <style>
+        .debug-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-info">
+        <div>📍 Sección About Debug</div>
+        <div id="image-status">⏳ Verificando imagen...</div>
+    </div>
+
+    <!-- Solo la sección About para prueba -->
+    <section id="about" class="about" style="padding-top: 50px;">
+        <div class="container">
+            <h2 class="section-title">Sobre Mí - DEBUG</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-description">
+                        Con 42 años, he decidido dar un giro completo a mi carrera profesional.
+                    </p>
+                    <div class="about-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">6</span>
+                            <span class="stat-label">Meses de Formación</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">42</span>
+                            <span class="stat-label">Años de Experiencia</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">8+</span>
+                            <span class="stat-label">Tecnologías Aprendidas</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="about-img-container">
+                        <img src="assets/about-image.jpg" alt="Workspace" class="about-img" 
+                             onload="document.getElementById('image-status').innerHTML = '✅ Imagen cargada OK'"
+                             onerror="document.getElementById('image-status').innerHTML = '❌ Error cargando imagen'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Verificar si el archivo existe
+        fetch('assets/about-image.jpg')
+            .then(response => {
+                if (response.ok) {
+                    console.log('✅ Imagen exists and accessible');
+                    document.getElementById('image-status').innerHTML = '✅ Archivo accesible';
+                } else {
+                    console.log('❌ Image file not accessible:', response.status);
+                    document.getElementById('image-status').innerHTML = '❌ Archivo no accesible: ' + response.status;
+                }
+            })
+            .catch(error => {
+                console.log('❌ Error fetching image:', error);
+                document.getElementById('image-status').innerHTML = '❌ Error: ' + error.message;
+            });
+    </script>
+</body>
+</html>
