@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Initialize Application
 function initializeApp() {
+    // Initialize EmailJS
+    emailjs.init("YOUR_PUBLIC_KEY"); // Reemplazar con tu clave pública real
+    
     initializeNavigation();
     initializeThemeToggle();
     initializeScrollEffects();
@@ -317,34 +320,95 @@ function handleFormSubmission(form) {
 
     // Get form data
     const formData = new FormData(form);
-    const data = {
-        name: formData.get('name'),
-        email: formData.get('email'),
+    const templateParams = {
+        from_name: formData.get('name'),
+        from_email: formData.get('email'),
         subject: formData.get('subject'),
-        message: formData.get('message')
+        message: formData.get('message'),
+        to_name: 'Rubén Sans Acevedo'
     };
 
-    // Simulate form submission (replace with actual submission logic)
+    // Send email using EmailJS
+    emailjs.send('service_gmail', 'template_contact', templateParams, 'YOUR_PUBLIC_KEY')
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+            
+            // Success state
+            submitButton.innerHTML = '<i class="fas fa-check"></i> ¡Mensaje Enviado!';
+            submitButton.classList.remove('loading');
+            submitButton.classList.add('success');
+            
+            // Show success message
+            showNotification('¡Mensaje enviado correctamente! Te contactaré pronto.', 'success');
+            
+            // Reset form
+            form.reset();
+            
+            // Reset button after delay
+            setTimeout(() => {
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+                submitButton.classList.remove('success');
+            }, 3000);
+            
+        }, function(error) {
+            console.log('FAILED...', error);
+            
+            // Error state
+            submitButton.innerHTML = '<i class="fas fa-times"></i> Error al enviar';
+            submitButton.classList.remove('loading');
+            submitButton.classList.add('error');
+            
+            // Show error message
+            showNotification('Error al enviar el mensaje. Por favor, intenta de nuevo o contáctame directamente.', 'error');
+            
+            // Reset button after delay
+            setTimeout(() => {
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+                submitButton.classList.remove('error');
+            }, 3000);        });
+}
+
+/* ===== NOTIFICATIONS ===== */
+function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+        <button class="notification-close">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    
+    // Add to document
+    document.body.appendChild(notification);
+    
+    // Close button functionality
+    const closeBtn = notification.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        notification.remove();
+    });
+    
+    // Auto remove after 5 seconds
     setTimeout(() => {
-        // Success state
-        submitButton.innerHTML = '<i class="fas fa-check"></i> ¡Mensaje Enviado!';
-        submitButton.classList.remove('loading');
-        submitButton.classList.add('success');
-        
-        // Show success message
-        showNotification('¡Mensaje enviado correctamente! Te contactaré pronto.', 'success');
-        
-        // Reset form
-        form.reset();
-        
-        // Reset button after delay
-        setTimeout(() => {
-            submitButton.innerHTML = originalText;
-            submitButton.disabled = false;
-            submitButton.classList.remove('success');
-        }, 3000);
-        
-    }, 2000);
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 5000);
+    
+    // Animate in
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 100);
 }
 
 /* ===== SKILL BARS ANIMATION ===== */

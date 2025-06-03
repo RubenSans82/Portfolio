@@ -1396,6 +1396,109 @@ body {
   margin-bottom: 0;
 }
 
+/* ===== NOTIFICATIONS ===== */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 10px;
+    padding: 15px 20px;
+    box-shadow: var(--shadow-lg);
+    border-left: 4px solid var(--primary-color);
+    z-index: 10000;
+    transform: translateX(100%);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    min-width: 300px;
+    max-width: 400px;
+    backdrop-filter: blur(10px);
+}
+
+.notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.notification-success {
+    border-left-color: #10b981;
+}
+
+.notification-error {
+    border-left-color: #ef4444;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 30px;
+}
+
+.notification-content i {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.notification-success .notification-content i {
+    color: #10b981;
+}
+
+.notification-error .notification-content i {
+    color: #ef4444;
+}
+
+.notification-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.notification-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-primary);
+}
+
+/* Dark theme notifications */
+[data-theme="dark"] .notification {
+    background: rgba(30, 30, 30, 0.95);
+    color: var(--text-light);
+    border-left-color: var(--primary-color);
+}
+
+[data-theme="dark"] .notification-close {
+    color: var(--text-light-secondary);
+}
+
+[data-theme="dark"] .notification-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+}
+
+/* ===== BUTTON STATES ===== */
+.btn.success {
+    background: #10b981;
+    border-color: #10b981;
+}
+
+.btn.error {
+    background: #ef4444;
+    border-color: #ef4444;
+}
+
+.btn.loading {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
 /* ===== ANIMATIONS ===== */
 
 @keyframes bounce {
