@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Curriculum Digital - Desarrollador Junior</title>
+    <meta name="description" content="Curriculum digital profesional - Desarrollador web junior especializado en tecnologías front-end y back-end">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/responsive.css">    <!-- CSS Fix para asegurar que el contenido sea visible -->
+    <style>
+        /* Fix básico solo para posicionamiento - SIN interferir con animaciones */
+        .hero-content {
+            position: relative !important;
+            z-index: 10 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        
+        .hero-text {
+            position: relative !important;
+            z-index: 10 !important;
+            width: 100% !important;
+            overflow: visible !important;
+        }
+        
+        /* Asegurar que las barras de progreso sean visibles */
+        .skill-progress {
+            width: var(--progress-width, 0%) !important;
+        }
+        
+        /* Fallback para casos donde JavaScript no carga */
+        .skill-progress[data-width="90%"] { --progress-width: 90%; }
+        .skill-progress[data-width="85%"] { --progress-width: 85%; }
+        .skill-progress[data-width="80%"] { --progress-width: 80%; }
+        .skill-progress[data-width="75%"] { --progress-width: 75%; }
+        .skill-progress[data-width="70%"] { --progress-width: 70%; }
+        .skill-progress[data-width="65%"] { --progress-width: 65%; }
+    </style>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">Portfolio</span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">Sobre Mí</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#skills" class="nav-link">Habilidades</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#projects" class="nav-link">Proyectos</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#experience" class="nav-link">Experiencia</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contacto</a>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <button class="theme-toggle" id="theme-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">                    <h1 class="hero-title">
+                        <span class="greeting">Hola, soy</span>
+                        <span class="name">Rubén Sans Acevedo</span>
+                        <span class="profession">Desarrollador Web</span>
+                    </h1>                    <p class="hero-description">
+                        Desarrollador web especializado en tecnologías frontend y backend modernas. 
+                        Experiencia sólida en HTML, CSS, JavaScript, PHP con MVC/Eloquent, Python con Flask/Django, 
+                        y Java con Spring. Apasionado por crear aplicaciones web robustas con código limpio y eficiente, 
+                        aprovechando herramientas modernas de desarrollo incluyendo IA para acelerar el aprendizaje 
+                        y mejorar la calidad del código.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#projects" class="btn btn-primary">Ver Proyectos</a>
+                        <a href="#contact" class="btn btn-secondary">Contactar</a>
+                    </div>                    <div class="hero-social">
+                        <a href="https://github.com/RubenSans82" target="_blank" class="social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:rubensans82@gmail.com" class="social-link" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="image-container">
+                        <img src="assets/profile.jpg" alt="Foto de perfil" class="profile-img">
+                        <div class="image-bg"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-arrow">
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">Sobre Mí</h2>
+            <div class="about-content">                <div class="about-text">
+                    <p class="about-description">
+                        Con 42 años, he decidido dar un giro completo a mi carrera profesional. Tras años trabajando 
+                        como operario en el sector de automoción y con formación en electrónica, he encontrado en el 
+                        desarrollo web la oportunidad perfecta para combinar mi pasión por la tecnología con mi deseo 
+                        de crecer profesionalmente usando más la mente que el cuerpo.
+                    </p>
+                    <p class="about-description">
+                        Mi transición comenzó motivada por el cambio de vida que supuso formar una familia y convertirme 
+                        en padre. Actualmente estoy finalizando un curso oficial de Desarrollo Web Full-Stack del SEPE/Xunta 
+                        de Galicia (6 meses), donde he adquirido sólidos conocimientos en HTML, CSS, JavaScript, PHP, Python 
+                        y Java. Durante este aprendizaje, he aprovechado herramientas de IA como GitHub Copilot y ChatGPT 
+                        para acelerar mi comprensión de conceptos complejos y mejorar la calidad de mi código, siempre 
+                        manteniendo un enfoque de aprendizaje profundo y comprensión real.
+                    </p>
+                    <p class="about-description">
+                        Mi experiencia previa con tecnología incluye programación de máquinas de control numérico 
+                        y modificación de código de videojuegos, lo que me ha dado una base técnica valiosa. Estoy 
+                        emocionado por comenzar esta nueva etapa profesional, aportando la madurez y determinación 
+                        que vienen con la experiencia de vida, combinadas con el entusiusiasmo de quien está descubriendo 
+                        su verdadera vocación y las posibilidades que ofrecen las herramientas modernas de desarrollo.
+                    </p><div class="about-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">6</span>
+                            <span class="stat-label">Meses de Formación</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">42</span>
+                            <span class="stat-label">Años de Experiencia</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">8+</span>
+                            <span class="stat-label">Tecnologías Aprendidas</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="about-img-container">
+                        <img src="assets/about-image.jpg" alt="Workspace" class="about-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <h2 class="section-title">Habilidades Técnicas</h2>
+            <div class="skills-content">
+                <div class="skills-category">
+                    <h3 class="category-title">Frontend</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-html5"></i>
+                            </div>
+                            <h4 class="skill-name">HTML5</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-css3-alt"></i>
+                            </div>
+                            <h4 class="skill-name">CSS3</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-js-square"></i>
+                            </div>
+                            <h4 class="skill-name">JavaScript</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-react"></i>
+                            </div>
+                            <h4 class="skill-name">React</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-category">
+                    <h3 class="category-title">Backend</h3>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-node-js"></i>
+                            </div>
+                            <h4 class="skill-name">Node.js</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="70%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-php"></i>
+                            </div>
+                            <h4 class="skill-name">PHP</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h4 class="skill-name">MySQL</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="70%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-icon">
+                                <i class="fab fa-python"></i>
+                            </div>
+                            <h4 class="skill-name">Python</h4>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-category">
+                    <h3 class="category-title">Herramientas</h3>
+                    <div class="tools-grid">
+                        <div class="tool-item">
+                            <i class="fab fa-git-alt"></i>
+                            <span>Git</span>
+                        </div>
+                        <div class="tool-item">
+                            <i class="fab fa-github"></i>
+                            <span>GitHub</span>
+                        </div>
+                        <div class="tool-item">
+                            <i class="fas fa-code"></i>
+                            <span>VS Code</span>
+                        </div>
+                        <div class="tool-item">
+                            <i class="fab fa-figma"></i>
+                            <span>Figma</span>
+                        </div>
+                        <div class="tool-item">
+                            <i class="fas fa-terminal"></i>
+                            <span>Terminal</span>
+                        </div>
+                        <div class="tool-item">
+                            <i class="fab fa-npm"></i>
+                            <span>NPM</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">            <h2 class="section-title">Mis Proyectos</h2>
+            <p class="section-subtitle">Proyectos desarrollados durante mi formación como desarrollador web</p>
+            
+            <div class="projects-filter">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="web">Web Apps</button>
+                <button class="filter-btn" data-filter="frontend">Frontend</button>
+                <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+            </div>            <div class="projects-grid">                <!-- Project 1 -->
+                <div class="project-card" data-category="web fullstack">
+                    <div class="project-image">
+                        <img src="assets/project1.jpg" alt="DevFlow - Gestión de Proyectos">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/RubenSans82" target="_blank" class="project-link" aria-label="Ver código en GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://devflow2025.web.app/" target="_blank" class="project-link" aria-label="Ver demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">DevFlow - Gestión de Proyectos</h3>
+                        <p class="project-description">
+                            Aplicación moderna para la gestión de proyectos de desarrollo con interfaz intuitiva, 
+                            sistema de tareas, seguimiento de progreso y colaboración en tiempo real.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">Vite</span>
+                            <span class="tech-tag">Firebase</span>
+                            <span class="tech-tag">CSS3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card" data-category="fullstack web">
+                    <div class="project-image">
+                        <img src="assets/project2.jpg" alt="Vigo Can - Centro Canino">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/RubenSans82" target="_blank" class="project-link" aria-label="Ver código en GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://rubensans.pythonanywhere.com/" target="_blank" class="project-link" aria-label="Ver demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Vigo Can - Centro Canino</h3>
+                        <p class="project-description">
+                            Sistema completo para la gestión de un centro de cuidado canino con reservas, 
+                            gestión de clientes, historial de mascotas y panel administrativo.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">SQLite</span>
+                            <span class="tech-tag">HTML/CSS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card" data-category="fullstack">
+                    <div class="project-image">
+                        <img src="assets/project3.jpg" alt="FormacomTrello">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/RubenSans82/FormacomTrello" target="_blank" class="project-link" aria-label="Ver código en GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">FormacomTrello</h3>
+                        <p class="project-description">
+                            Aplicación estilo Trello para gestión de proyectos y tareas con tableros Kanban, 
+                            sistema de usuarios y gestión de equipos desarrollada con Spring Boot.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Java</span>
+                            <span class="tech-tag">Spring Boot</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">Thymeleaf</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card" data-category="frontend">
+                    <div class="project-image">
+                        <img src="assets/project4.jpg" alt="RetroBlog">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/RubenSans82/blog-frontend" target="_blank" class="project-link" aria-label="Ver código en GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="https://rubensans82.github.io/blog-frontend" target="_blank" class="project-link" aria-label="Ver demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">RetroBlog</h3>
+                        <p class="project-description">
+                            Blog con diseño retro implementado con Node.js y React, featuring sistema de posts, 
+                            comentarios y diseño nostálgico de los años 80.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Node.js</span>
+                            <span class="tech-tag">React</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">GitHub Pages</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="assets/project5.jpg" alt="TiendaMVC">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/RubenSans82/tiendamvc" target="_blank" class="project-link" aria-label="Ver código en GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">TiendaMVC</h3>
+                        <p class="project-description">
+                            E-commerce desarrollado en PHP puro implementando el patrón MVC personalizado, 
+                            con carrito de compras, gestión de productos y sistema de usuarios.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">PHP</span>
+                            <span class="tech-tag">MVC</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">CSS3</span>
+                        </div>
+                    </div>
+                </div>                <!-- Project 6 -->
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="assets/project6.jpg" alt="Talleres Sanabria">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://rubensans.wuaze.com/" target="_blank" class="project-link" aria-label="Ver demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Talleres Sanabria</h3>
+                        <p class="project-description">
+                            Sitio web corporativo para taller mecánico desarrollado en WordPress, 
+                            con secciones de servicios, galería y formulario de contacto optimizado para SEO.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">WordPress</span>
+                            <span class="tech-tag">PHP</span>
+                            <span class="tech-tag">CSS3</span>
+                            <span class="tech-tag">SEO</span>
+                        </div>
+                    </div>
+                </div>                <!-- Project 7 -->
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="assets/project7.jpg" alt="TurboTech - Tienda Online">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="http://prestashop2025.ct.ws/" target="_blank" class="project-link" aria-label="Ver demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">TurboTech - Tienda Online</h3>
+                        <p class="project-description">
+                            Tienda online completa especializada en productos tecnológicos desarrollada en PrestaShop, 
+                            con catálogo de productos, carrito de compras, gestión de pedidos y panel administrativo.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">PrestaShop</span>
+                            <span class="tech-tag">PHP</span>
+                            <span class="tech-tag">MySQL</span>
+                            <span class="tech-tag">E-commerce</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 8 -->
+                <div class="project-card" data-category="fullstack web">
+                    <div class="project-image">
+                        <img src="assets/project8.jpg" alt="Reserva tu Mesa">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://github.com/RubenSans82/reservatumesa" target="_blank" class="project-link" aria-label="Ver código en GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <span class="project-link demo-coming-soon" title="Demo próximamente">
+                                    <i class="fas fa-video"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Reserva tu Mesa</h3>
+                        <p class="project-description">
+                            Sistema de reservas para restaurantes desarrollado en Python con Flask. Incluye gestión 
+                            de mesas, horarios, clientes y notificaciones. Interfaz intuitiva para usuarios y panel administrativo completo.
+                        </p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Flask</span>
+                            <span class="tech-tag">SQLite</span>
+                            <span class="tech-tag">Jinja2</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="section-title">Experiencia & Educación</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 class="timeline-title">Curso de Desarrollo Web Full Stack</h3>
+                            <span class="timeline-date">2023 - 2024</span>
+                        </div>                        <h4 class="timeline-subtitle">SEPE/Xunta de Galicia - Centro de Formación Profesional</h4>
+                        <p class="timeline-description">
+                            Formación intensiva de 6 meses en tecnologías web modernas incluyendo HTML5, CSS3, 
+                            JavaScript, React, Node.js, PHP, Python, Java con Spring, bases de datos y metodologías ágiles. 
+                            Durante el curso integré herramientas de IA como GitHub Copilot y ChatGPT para acelerar 
+                            el aprendizaje, comprender conceptos complejos y mejorar la calidad del código, 
+                            siempre manteniendo el enfoque en la comprensión profunda de los fundamentos.
+                        </p>                        <div class="timeline-skills">
+                            <span class="skill-badge">HTML/CSS</span>
+                            <span class="skill-badge">JavaScript</span>
+                            <span class="skill-badge">React</span>
+                            <span class="skill-badge">Node.js</span>
+                            <span class="skill-badge">PHP</span>
+                            <span class="skill-badge">Python</span>
+                            <span class="skill-badge">Java Spring</span>
+                            <span class="skill-badge">GitHub Copilot</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 class="timeline-title">Proyectos Freelance</h3>
+                            <span class="timeline-date">2024 - Presente</span>
+                        </div>
+                        <h4 class="timeline-subtitle">Desarrollador Web Independiente</h4>
+                        <p class="timeline-description">
+                            Desarrollo de sitios web y aplicaciones para pequeñas empresas y emprendedores. 
+                            Enfoque en diseño responsivo y experiencia de usuario optimizada.
+                        </p>
+                        <div class="timeline-skills">
+                            <span class="skill-badge">WordPress</span>
+                            <span class="skill-badge">PHP</span>
+                            <span class="skill-badge">MySQL</span>
+                            <span class="skill-badge">SEO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 class="timeline-title">Certificación en JavaScript</h3>
+                            <span class="timeline-date">2024</span>
+                        </div>
+                        <h4 class="timeline-subtitle">FreeCodeCamp</h4>
+                        <p class="timeline-description">
+                            Certificación completa en JavaScript incluyendo algoritmos, estructuras de datos 
+                            y proyectos prácticos de desarrollo web.
+                        </p>
+                        <div class="timeline-skills">
+                            <span class="skill-badge">ES6+</span>
+                            <span class="skill-badge">Algorithms</span>
+                            <span class="skill-badge">Data Structures</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">¡Trabajemos Juntos!</h2>
+            <p class="section-subtitle">¿Tienes un proyecto en mente? Me encantaría escucharte</p>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>                        <div class="contact-details">
+                            <h3>Email</h3>
+                            <p>rubensans82@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Teléfono</h3>
+                            <p>+34 626 027 662</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h3>Ubicación</h3>
+                            <p>Vigo, España</p>
+                        </div>
+                    </div>
+                      <div class="contact-social">
+                        <h3>Conéctate conmigo:</h3>
+                        <div class="social-links">
+                            <a href="https://github.com/RubenSans82" target="_blank" class="social-link" aria-label="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="mailto:rubensans82@gmail.com" class="social-link" aria-label="Email">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contact-form">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" required>
+                        <label for="name">Tu Nombre</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" required>
+                        <label for="email">Tu Email</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" required>
+                        <label for="subject">Asunto</label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea id="message" name="message" required></textarea>
+                        <label for="message">Tu Mensaje</label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-full">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">                <p>&copy; 2024 Rubén Sans Acevedo. Todos los derechos reservados.</p>
+                <p>Desarrollado con ❤️ usando HTML, CSS y JavaScript</p>
+            </div>
+        </div>
+    </footer>    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+</body>
+</html>

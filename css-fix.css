@@ -1,0 +1,58 @@
+/* CSS Fix temporal para mostrar todo el contenido sin depender de JavaScript */
+
+/* Forzar visibilidad de todos los elementos animados */
+.reveal-text,
+.stagger-item,
+.appear-from-bottom,
+.appear-from-left,
+.appear-from-right,
+.appear-from-top,
+.fade-in-up,
+.fade-in-down,
+.fade-in-left,
+.fade-in-right,
+.slide-in-left,
+.slide-in-right,
+.slide-in-up,
+.slide-in-down {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+}
+
+/* Asegurar que el hero y otras secciones estén visibles */
+.hero-text,
+.hero-image,
+.about-text,
+.skills-grid,
+.project-card,
+.timeline-item,
+.contact-content {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+}
+
+/* Mostrar elementos que pueden estar ocultos */
+.hidden {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Debug - remover después */
+body {
+    background: #f5f5f5 !important;
+}
+
+.hero {
+    background: white !important;
+    border: 2px solid blue !important;
+    margin: 10px !important;
+}
+
+.about {
+    background: white !important;
+    border: 2px solid green !important;
+    margin: 10px !important;
+}

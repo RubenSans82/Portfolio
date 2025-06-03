@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Hero Animation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-text {
+            max-width: 600px;
+        }
+        
+        .hero-text > * {
+            margin: 20px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+        }
+        
+        /* Estilo inicial para animación */
+        .hero-animate {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+        
+        .hero-animate.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-text">
+            <h1>Elemento 1 - Título</h1>
+            <p>Elemento 2 - Descripción</p>
+            <div>Elemento 3 - Botones</div>
+            <div>Elemento 4 - Social</div>
+        </div>
+    </div>
+
+    <script>
+        console.log('Script iniciando...');
+        
+        // Esperar a que el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM listo');
+            
+            const heroElements = document.querySelectorAll('.hero-text > *');
+            console.log('Elementos encontrados:', heroElements.length);
+            
+            // Aplicar clase de animación inicial
+            heroElements.forEach((element, index) => {
+                console.log(`Procesando elemento ${index + 1}:`, element);
+                element.classList.add('hero-animate');
+            });
+            
+            // Animar elementos uno por uno
+            setTimeout(() => {
+                heroElements.forEach((element, index) => {
+                    setTimeout(() => {
+                        console.log(`Animando elemento ${index + 1}`);
+                        element.classList.add('show');
+                    }, index * 300);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>

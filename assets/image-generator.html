@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Imágenes Placeholder</title>
+    <style>
+        .placeholder-generator {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-placeholder {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+        }
+        .project-placeholder {
+            width: 400px;
+            height: 250px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        .about-placeholder {
+            width: 350px;
+            height: 300px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .hero-bg {
+            width: 600px;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="placeholder-generator">
+        <div class="placeholder profile-placeholder">
+            <div>FOTO<br>DE PERFIL<br>300x300</div>
+        </div>
+        <div class="placeholder project-placeholder">
+            <div>PROYECTO<br>SCREENSHOT<br>400x250</div>
+        </div>
+        <div class="placeholder about-placeholder">
+            <div>WORKSPACE<br>IMAGE<br>350x300</div>
+        </div>
+        <div class="placeholder hero-bg">
+            <div>HERO<br>BACKGROUND<br>600x400</div>
+        </div>
+    </div>
+    <script>
+        // Instrucciones para generar imágenes reales
+        console.log(`
+        INSTRUCCIONES PARA IMÁGENES:
+        1. Foto de perfil: Usa una foto profesional, formal pero amigable (300x300px)
+        2. Proyectos: Screenshots de tus proyectos reales (400x250px cada uno)
+        3. About: Imagen de workspace/escritorio profesional (350x300px)
+        4. Usa herramientas como Canva, Figma, o toma screenshots reales
+        5. Optimiza las imágenes para web (formato WebP o JPG, <100KB)
+        `);
+    </script>
+</body>
+</html>

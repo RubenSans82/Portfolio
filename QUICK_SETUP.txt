@@ -1,0 +1,117 @@
+🚀 GUÍA RÁPIDA DE PERSONALIZACIÓN - PORTFOLIO ALEX MARTÍNEZ
+
+═══════════════════════════════════════════════════════════════
+
+⚡ CAMBIOS INMEDIATOS (5 minutos):
+
+1. 👤 INFORMACIÓN PERSONAL:
+   - Buscar "Alex Martínez" en index.html → reemplazar por tu nombre
+   - Buscar "alex.martinez.dev@gmail.com" → tu email
+   - Buscar "+34 650 123 456" → tu teléfono
+   - Buscar "Madrid, España" → tu ubicación
+
+2. 🔗 REDES SOCIALES:
+   - github.com/alexmartinez-dev → tu GitHub
+   - linkedin.com/in/alex-martinez-dev → tu LinkedIn
+   - twitter.com/alexmartinezdev → tu Twitter
+
+3. 💼 PROYECTOS:
+   - Cambiar URLs de GitHub en sección proyectos
+   - Actualizar demos en vivo (Netlify/Vercel links)
+   - Modificar descripciones de proyectos
+
+═══════════════════════════════════════════════════════════════
+
+📸 IMÁGENES REQUERIDAS (15 minutos):
+
+UBICACIÓN: assets/
+- profile.jpg (300x300px) → Tu foto profesional
+- about-image.jpg (400x300px) → Tu workspace/setup
+- project1.jpg (400x250px) → Screenshot proyecto 1
+- project2.jpg (400x250px) → Screenshot proyecto 2  
+- project3.jpg (400x250px) → Screenshot proyecto 3
+- project4.jpg (400x250px) → Screenshot proyecto 4
+
+HERRAMIENTAS:
+• Canva.com → Crear mockups si no tienes proyectos
+• TinyPNG.com → Comprimir imágenes
+• Unsplash.com → Fotos stock profesionales
+
+═══════════════════════════════════════════════════════════════
+
+🎨 PERSONALIZACIÓN AVANZADA:
+
+1. COLORES (styles/main.css líneas 8-20):
+   --primary-color: #667eea;     → Tu color principal
+   --secondary-color: #764ba2;   → Color secundario
+   --accent-color: #f093fb;      → Color de acento
+
+2. HABILIDADES (index.html):
+   - Actualizar porcentajes data-width="XX%"
+   - Agregar/quitar tecnologías según experiencia
+
+3. EXPERIENCIA:
+   - Modificar timeline con tu formación real
+   - Actualizar fechas y descripciones
+
+═══════════════════════════════════════════════════════════════
+
+🌐 DESPLIEGUE (10 minutos):
+
+GITHUB PAGES:
+1. Crear repositorio público en GitHub
+2. Subir todos los archivos
+3. Settings > Pages > Deploy from branch: main
+4. URL: https://tu-usuario.github.io/tu-repositorio
+
+NETLIFY (Recomendado):
+1. netlify.com → New site from Git
+2. Conectar GitHub repository
+3. Deploy settings: automático
+4. URL personalizada disponible
+
+VERCEL:
+1. vercel.com → Import Git Repository
+2. Framework: Other
+3. Deploy automático en cada push
+
+═══════════════════════════════════════════════════════════════
+
+✅ CHECKLIST ANTES DE ENVIAR:
+
+□ Información personal actualizada
+□ Enlaces de redes sociales funcionando
+□ Todas las imágenes subidas y optimizadas
+□ Proyectos con enlaces reales de GitHub
+□ CV actualizado (assets/CV_Alex_Martinez.pdf)
+□ Email de contacto correcto
+□ Teléfono actualizado
+□ Sitio desplegado y accesible
+□ Probado en móvil y desktop
+□ Enlaces externos funcionando
+
+═══════════════════════════════════════════════════════════════
+
+🔥 TIPS PROFESIONALES:
+
+• Usa foto profesional con buena iluminación
+• Proyectos deben tener README detallado en GitHub  
+• Incluye tecnologías que realmente conoces
+• Descripción personal debe ser concisa y atractiva
+• Responde emails de contacto rápidamente
+• Mantén GitHub activo con commits regulares
+• LinkedIn debe estar completo y actualizado
+
+═══════════════════════════════════════════════════════════════
+
+📧 DESPUÉS DEL DEPLOYMENT:
+
+1. Agregar URL del portfolio a tu CV
+2. Incluir en firma de email
+3. Compartir en LinkedIn
+4. Agregar a perfiles de trabajo (InfoJobs, LinkedIn, etc.)
+5. Incluir en aplicaciones de trabajo
+
+═══════════════════════════════════════════════════════════════
+
+¡Tu portfolio está listo para impresionar a reclutadores! 🎯
