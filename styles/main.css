@@ -463,6 +463,12 @@ body {
   transform: scale(1.1);
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-base);
+}
+
 .nav-toggle {
   display: none;
   flex-direction: column;
