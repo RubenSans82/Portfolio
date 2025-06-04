@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Charla Frontend</title>
+    <link rel="stylesheet" href="styles/charla.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #5a67d8; }
+    </style>
+</head>
+<body>
+    <div class="debug-panel">
+        <h1>🧪 Test Charla Frontend</h1>
+        
+        <h3>Estado de Carga:</h3>
+        <div id="load-status"></div>
+        
+        <h3>Acciones:</h3>
+        <button onclick="initCharla()">Inicializar Charla</button>
+        <button onclick="showCharla()">Mostrar Charla</button>
+        <button onclick="sendTestMessage()">Enviar Mensaje Test</button>
+        <button onclick="checkCSS()">Verificar CSS</button>
+        
+        <h3>Log de Eventos:</h3>
+        <div id="log"></div>
+    </div>
+
+    <!-- Aquí aparecerá el chat -->
+    
+    <script src="js/charla.js"></script>
+    <script>
+        let charlaInstance = null;
+        
+        function log(message, type = 'info') {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `<div class="status ${type}">[${timestamp}] ${message}</div>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+        
+        function updateStatus() {
+            const statusDiv = document.getElementById('load-status');
+            
+            // Verificar si CharlaAI está disponible
+            if (typeof CharlaAI !== 'undefined') {
+                statusDiv.innerHTML += '<div class="status success">✅ CharlaAI clase cargada</div>';
+            } else {
+                statusDiv.innerHTML += '<div class="status error">❌ CharlaAI clase NO cargada</div>';
+            }
+            
+            // Verificar CSS
+            const charlaCSS = document.querySelector('link[href*="charla.css"]');
+            if (charlaCSS) {
+                statusDiv.innerHTML += '<div class="status success">✅ CSS de charla cargado</div>';
+            } else {
+                statusDiv.innerHTML += '<div class="status error">❌ CSS de charla NO cargado</div>';
+            }
+            
+            // Verificar ambiente
+            const isLocal = window.location.hostname === 'localhost';
+            statusDiv.innerHTML += `<div class="status info">🌐 Ambiente: ${isLocal ? 'LOCAL' : 'PRODUCCIÓN'}</div>`;
+        }
+        
+        function initCharla() {
+            try {
+                if (typeof CharlaAI === 'undefined') {
+                    log('CharlaAI no está disponible', 'error');
+                    return;
+                }
+                
+                charlaInstance = new CharlaAI();
+                log('Charla inicializada correctamente', 'success');
+                
+                // Verificar que el botón apareció
+                setTimeout(() => {
+                    const button = document.querySelector('.charla-float-button');
+                    if (button) {
+                        log('Botón flotante creado correctamente', 'success');
+                    } else {
+                        log('Botón flotante NO encontrado', 'error');
+                    }
+                }, 500);
+                
+            } catch (error) {
+                log(`Error al inicializar: ${error.message}`, 'error');
+            }
+        }
+        
+        function showCharla() {
+            if (!charlaInstance) {
+                log('Primero debes inicializar la charla', 'error');
+                return;
+            }
+            
+            try {
+                // Simular click en el botón
+                const button = document.querySelector('.charla-float-button');
+                if (button) {
+                    button.click();
+                    log('Chat abierto', 'success');
+                } else {
+                    log('Botón no encontrado', 'error');
+                }
+            } catch (error) {
+                log(`Error al mostrar: ${error.message}`, 'error');
+            }
+        }
+        
+        function sendTestMessage() {
+            if (!charlaInstance) {
+                log('Primero debes inicializar la charla', 'error');
+                return;
+            }
+            
+            try {
+                // Abrir el chat si no está abierto
+                const container = document.querySelector('.charla-container');
+                if (!container || !container.classList.contains('active')) {
+                    showCharla();
+                    setTimeout(() => sendTestMessage(), 1000);
+                    return;
+                }
+                
+                // Enviar mensaje
+                const input = document.querySelector('.charla-input');
+                if (input) {
+                    input.value = 'Hola, ¿puedes presentarte?';
+                    
+                    // Simular envío
+                    const sendButton = document.querySelector('.charla-send-btn');
+                    if (sendButton) {
+                        sendButton.click();
+                        log('Mensaje de prueba enviado', 'success');
+                    } else {
+                        log('Botón de envío no encontrado', 'error');
+                    }
+                } else {
+                    log('Input de mensaje no encontrado', 'error');
+                }
+            } catch (error) {
+                log(`Error al enviar mensaje: ${error.message}`, 'error');
+            }
+        }
+        
+        function checkCSS() {
+            const elements = [
+                '.charla-float-button',
+                '.charla-container',
+                '.charla-header',
+                '.charla-messages',
+                '.charla-input-area'
+            ];
+            
+            elements.forEach(selector => {
+                const element = document.querySelector(selector);
+                if (element) {
+                    const style = getComputedStyle(element);
+                    log(`${selector}: encontrado, display: ${style.display}`, 'success');
+                } else {
+                    log(`${selector}: NO encontrado`, 'error');
+                }
+            });
+        }
+        
+        // Ejecutar al cargar
+        window.onload = function() {
+            updateStatus();
+            log('Página cargada', 'info');
+        };
+        
+        // Escuchar errores
+        window.onerror = function(msg, url, line, col, error) {
+            log(`Error JS: ${msg} (${url}:${line})`, 'error');
+        };
+    </script>
+</body>
+</html>

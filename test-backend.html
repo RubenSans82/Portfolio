@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Directo - Backend Chat</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }
+        .result { padding: 15px; margin: 10px 0; border-radius: 5px; border-left: 4px solid; }
+        .success { background: #d4edda; border-color: #28a745; color: #155724; }
+        .error { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+        .info { background: #d1ecf1; border-color: #17a2b8; color: #0c5460; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Test Directo - Backend Chat</h1>
+          <div class="info">
+            <h3>URLs a probar:</h3>
+            <ul>
+                <li><strong>Backend Producción:</strong> <a href="https://phprubensans.wuaze.com/index.php" target="_blank">https://phprubensans.wuaze.com/index.php</a></li>
+                <li><strong>Test Producción:</strong> <a href="https://phprubensans.wuaze.com/test.php" target="_blank">https://phprubensans.wuaze.com/test.php</a></li>
+                <li><strong>Backend Local:</strong> <a href="http://localhost/MF0493_3/chat-backend/index.php" target="_blank">http://localhost/MF0493_3/chat-backend/index.php</a></li>
+                <li><strong>Test Local:</strong> <a href="http://localhost/MF0493_3/chat-backend/test.php" target="_blank">http://localhost/MF0493_3/chat-backend/test.php</a></li>
+            </ul>
+        </div>
+        
+        <h3>Tests Producción (InfinityFree):</h3>
+        <button onclick="testBackendMain('production')">🚀 Test Backend Producción</button>
+        <button onclick="testBackendConnectivity('production')">🧪 Test Conectividad Producción</button>
+        <button onclick="testChatMessage('production')">💬 Test Mensaje Producción</button>
+        
+        <h3>Tests Local (XAMPP):</h3>
+        <button onclick="testBackendMain('local')">🚀 Test Backend Local</button>
+        <button onclick="testBackendConnectivity('local')">🧪 Test Conectividad Local</button>
+        <button onclick="testChatMessage('local')">💬 Test Mensaje Local</button>
+        
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function addResult(type, title, content) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${type}`;
+            div.innerHTML = `
+                <h4>${title}</h4>
+                <pre>${content}</pre>
+                <small>Hora: ${new Date().toLocaleTimeString()}</small>
+            `;
+            results.appendChild(div);
+        }
+          function getUrls(environment) {
+            if (environment === 'production') {
+                return {
+                    backend: 'https://phprubensans.wuaze.com/index.php',
+                    test: 'https://phprubensans.wuaze.com/test.php'
+                };
+            } else {
+                return {
+                    backend: 'http://localhost/MF0493_3/chat-backend/index.php',
+                    test: 'http://localhost/MF0493_3/chat-backend/test.php'
+                };
+            }
+        }
+        
+        async function testBackendMain(environment = 'production') {
+            const urls = getUrls(environment);
+            const envName = environment === 'production' ? 'Producción' : 'Local';
+            
+            addResult('info', `🚀 Probando Backend ${envName}`, `Enviando petición POST a ${urls.backend}...`);
+            
+            try {
+                const response = await fetch(urls.backend, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: 'test' })
+                });
+                
+                const data = await response.text();
+                
+                if (response.ok) {
+                    addResult('success', `✅ Backend ${envName} - Respuesta OK`, 
+                        `Status: ${response.status}\nRespuesta:\n${data}`);
+                } else {
+                    addResult('error', `❌ Backend ${envName} - Error HTTP`, 
+                        `Status: ${response.status}\nRespuesta:\n${data}`);
+                }
+            } catch (error) {
+                addResult('error', `❌ Backend ${envName} - Error de Red`, error.message);
+            }
+        }
+        
+        async function testBackendConnectivity(environment = 'production') {
+            const urls = getUrls(environment);
+            const envName = environment === 'production' ? 'Producción' : 'Local';
+            
+            addResult('info', `🧪 Probando Test de Conectividad ${envName}`, `Enviando petición GET a ${urls.test}...`);
+            
+            try {
+                const response = await fetch(urls.test);
+                const data = await response.text();
+                
+                if (response.ok) {
+                    addResult('success', `✅ Test de Conectividad ${envName} - OK`, 
+                        `Status: ${response.status}\nRespuesta:\n${data}`);
+                } else {
+                    addResult('error', `❌ Test de Conectividad ${envName} - Error HTTP`, 
+                        `Status: ${response.status}\nRespuesta:\n${data}`);
+                }
+            } catch (error) {
+                addResult('error', `❌ Test de Conectividad ${envName} - Error de Red`, error.message);
+            }
+        }
+        
+        async function testChatMessage(environment = 'production') {
+            const urls = getUrls(environment);
+            const envName = environment === 'production' ? 'Producción' : 'Local';
+            
+            addResult('info', `💬 Probando Mensaje Real ${envName}`, `Enviando pregunta real al chat en ${urls.backend}...`);
+            
+            try {
+                const response = await fetch(urls.backend, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: '¿Quién es Rubén?' })
+                });
+                
+                const data = await response.text();
+                
+                if (response.ok) {
+                    addResult('success', `✅ Mensaje Chat ${envName} - Respuesta OK`, 
+                        `Status: ${response.status}\nRespuesta:\n${data}`);
+                } else {
+                    addResult('error', `❌ Mensaje Chat ${envName} - Error HTTP`, 
+                        `Status: ${response.status}\nRespuesta:\n${data}`);
+                }
+            } catch (error) {
+                addResult('error', `❌ Mensaje Chat ${envName} - Error de Red`, error.message);
+            }
+        }
+        
+        // Test inicial
+        window.onload = function() {
+            addResult('info', '📋 Página de Test Cargada', 
+                'Usa los botones para probar la conectividad con tu backend.\n\nSi todos los tests fallan, significa que los archivos no están subidos a InfinityFree.');
+        };
+    </script>
+</body>
+</html>

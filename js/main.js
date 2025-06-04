@@ -12,14 +12,14 @@ function initializeApp() {
     
     initializeNavigation();
     initializeThemeToggle();
-    initializeScrollEffects();
-    initializeProjectFilters();
+    initializeScrollEffects();    initializeProjectFilters();
     initializeContactForm();
     initializeSkillBars();
     initializeScrollIndicator();
     initializeParallaxEffects();
     initializeLazyLoading();
     initializeTypewriterEffect();
+    initializeCharlaAI();
 }
 
 /* ===== NAVIGATION ===== */
@@ -652,4 +652,30 @@ if ('serviceWorker' in navigator) {
                 console.log('SW registration failed: ', registrationError);
             });
     });
+}
+
+/* ===== CHARLA IA INITIALIZATION ===== */
+function initializeCharlaAI() {
+    // Verificar que la clase CharlaAI esté disponible
+    if (typeof CharlaAI !== 'undefined') {
+        // Verificar que Font Awesome esté cargado
+        const fontAwesomeLink = document.querySelector('link[href*="font-awesome"]');
+        
+        if (fontAwesomeLink) {
+            // Esperar un poco para que Font Awesome se cargue completamente
+            setTimeout(() => {
+                window.charlaAI = new CharlaAI();
+                console.log('Charla IA inicializada correctamente con Font Awesome');
+                
+                // Para producción, cambiar la URL de la API:
+                // window.charlaAI.config.apiUrl = 'https://tu-dominio.infinityfreeapp.com/';
+            }, 1000);
+        } else {
+            // Si no hay Font Awesome, cargar sin iconos
+            console.warn('Font Awesome no encontrado, la charla puede verse sin iconos');
+            window.charlaAI = new CharlaAI();
+        }
+    } else {
+        console.warn('CharlaAI no está disponible. Asegúrate de que charla.js esté cargado.');
+    }
 }

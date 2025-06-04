@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Chat IA - Rubén Sans</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid;
+        }
+        .success { 
+            background: #d4edda; 
+            border-color: #28a745; 
+            color: #155724; 
+        }
+        .error { 
+            background: #f8d7da; 
+            border-color: #dc3545; 
+            color: #721c24; 
+        }
+        .info { 
+            background: #d1ecf1; 
+            border-color: #17a2b8; 
+            color: #0c5460; 
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        #response { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            border-radius: 5px; 
+            margin: 10px 0;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🤖 Test Chat IA - Rubén Sans</h1>
+        
+        <div class="test-result info">
+            <strong>URL del Backend:</strong> <span id="backend-url">http://localhost/MF0493_3/chat-backend/</span>
+        </div>
+        
+        <h3>Pruebas Rápidas:</h3>
+        <button onclick="testConnection()">🔗 Test Conexión</button>
+        <button onclick="testBasicQuestion()">❓ Pregunta Básica</button>
+        <button onclick="testSkillsQuestion()">💻 Test Habilidades</button>
+        <button onclick="testProjectsQuestion()">🚀 Test Proyectos</button>
+        
+        <h3>Pregunta Personalizada:</h3>
+        <input type="text" id="custom-question" placeholder="Escribe tu pregunta aquí..." style="width: 70%; padding: 8px;">
+        <button onclick="testCustomQuestion()">Enviar</button>
+        
+        <div id="results"></div>
+        <div id="response"></div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost/MF0493_3/chat-backend/';
+        
+        function addResult(type, message) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.innerHTML = `<strong>${new Date().toLocaleTimeString()}:</strong> ${message}`;
+            results.appendChild(div);
+            results.scrollTop = results.scrollHeight;
+        }
+        
+        async function testConnection() {
+            addResult('info', 'Probando conexión con el backend...');
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: 'test' })
+                });
+                
+                if (response.ok) {
+                    addResult('success', '✅ Conexión exitosa con el backend');
+                } else {
+                    addResult('error', `❌ Error de conexión: ${response.status} ${response.statusText}`);
+                }
+            } catch (error) {
+                addResult('error', `❌ Error de red: ${error.message}`);
+            }
+        }
+        
+        async function sendTestMessage(message, testName) {
+            addResult('info', `Enviando: "${message}"`);
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    addResult('success', `✅ ${testName} completado`);
+                    document.getElementById('response').textContent = `Respuesta de la IA:\n\n${data.reply}`;
+                } else {
+                    addResult('error', `❌ Error en ${testName}: ${response.status}`);
+                }
+            } catch (error) {
+                addResult('error', `❌ Error en ${testName}: ${error.message}`);
+            }
+        }
+        
+        function testBasicQuestion() {
+            sendTestMessage('Hola, ¿quién eres?', 'Pregunta Básica');
+        }
+        
+        function testSkillsQuestion() {
+            sendTestMessage('¿Qué habilidades técnicas tiene Rubén?', 'Test Habilidades');
+        }
+        
+        function testProjectsQuestion() {
+            sendTestMessage('Cuéntame sobre los proyectos de Rubén', 'Test Proyectos');
+        }
+        
+        function testCustomQuestion() {
+            const question = document.getElementById('custom-question').value;
+            if (question.trim()) {
+                sendTestMessage(question, 'Pregunta Personalizada');
+                document.getElementById('custom-question').value = '';
+            } else {
+                addResult('error', 'Por favor escribe una pregunta');
+            }
+        }
+        
+        // Test inicial al cargar la página
+        window.onload = function() {
+            addResult('info', 'Página de test cargada. Puedes probar la funcionalidad del chat.');
+        };
+    </script>
+</body>
+</html>

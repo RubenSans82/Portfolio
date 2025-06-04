@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Portfolio con Charla</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/charla.css">
+    <style>
+        .test-overlay {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            z-index: 10000;
+            max-width: 300px;
+            font-size: 12px;
+        }
+        .test-status {
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 3px;
+        }
+        .ok { background: #4CAF50; }
+        .error { background: #f44336; }
+        .warning { background: #ff9800; }
+        .test-buttons {
+            margin-top: 10px;
+        }
+        .test-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            margin: 2px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Panel de Debug -->
+    <div class="test-overlay">
+        <h4>🧪 Debug Panel</h4>
+        <div id="debug-status"></div>
+        <div class="test-buttons">
+            <button class="test-btn" onclick="testCharla()">Test Charla</button>
+            <button class="test-btn" onclick="forceInit()">Forzar Init</button>
+            <button class="test-btn" onclick="showBackend()">Test Backend</button>
+        </div>
+    </div>
+
+    <!-- Hero simplificado para pruebas -->
+    <section class="hero" style="min-height: 100vh; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; align-items: center; justify-content: center;">
+        <div style="text-align: center; color: white;">
+            <h1 style="font-size: 3em; margin-bottom: 20px;">Rubén Sans Acevedo</h1>
+            <p style="font-size: 1.2em; margin-bottom: 30px;">Desarrollador Web Junior</p>
+            <p style="font-size: 1em; opacity: 0.8;">Portfolio con Charla IA integrada</p>
+            
+            <!-- Información de debug visible -->
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 30px; text-align: left;">
+                <strong>🔍 Estado del Sistema:</strong><br>
+                <span id="main-status">Cargando...</span>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/charla.js"></script>
+    <script>
+        let debugInfo = {
+            charlaLoaded: false,
+            charlaInitialized: false,
+            cssLoaded: false,
+            buttonVisible: false,
+            backendResponding: false
+        };
+
+        function updateDebugStatus() {
+            const statusDiv = document.getElementById('debug-status');
+            const mainStatusDiv = document.getElementById('main-status');
+            
+            // Verificar carga de CharlaAI
+            debugInfo.charlaLoaded = typeof CharlaAI !== 'undefined';
+            
+            // Verificar CSS
+            debugInfo.cssLoaded = !!document.querySelector('link[href*="charla.css"]');
+            
+            // Verificar botón
+            debugInfo.buttonVisible = !!document.querySelector('.charla-float-button');
+            
+            let html = '';
+            html += `<div class="test-status ${debugInfo.charlaLoaded ? 'ok' : 'error'}">CharlaAI: ${debugInfo.charlaLoaded ? 'OK' : 'ERROR'}</div>`;
+            html += `<div class="test-status ${debugInfo.cssLoaded ? 'ok' : 'error'}">CSS: ${debugInfo.cssLoaded ? 'OK' : 'ERROR'}</div>`;
+            html += `<div class="test-status ${debugInfo.charlaInitialized ? 'ok' : 'warning'}">Inicializado: ${debugInfo.charlaInitialized ? 'SÍ' : 'NO'}</div>`;
+            html += `<div class="test-status ${debugInfo.buttonVisible ? 'ok' : 'warning'}">Botón: ${debugInfo.buttonVisible ? 'VISIBLE' : 'OCULTO'}</div>`;
+            html += `<div class="test-status ${debugInfo.backendResponding ? 'ok' : 'warning'}">Backend: ${debugInfo.backendResponding ? 'OK' : 'PENDIENTE'}</div>`;
+            
+            statusDiv.innerHTML = html;
+            
+            // Estado principal
+            const allOk = debugInfo.charlaLoaded && debugInfo.cssLoaded && debugInfo.charlaInitialized;
+            mainStatusDiv.innerHTML = allOk ? 
+                '✅ Charla IA lista para usar' : 
+                '⚠️ Charla IA cargando o con errores';
+        }
+
+        function testCharla() {
+            try {
+                if (typeof CharlaAI === 'undefined') {
+                    alert('CharlaAI no está disponible');
+                    return;
+                }
+                
+                if (!window.charlaAI) {
+                    window.charlaAI = new CharlaAI();
+                    debugInfo.charlaInitialized = true;
+                }
+                
+                // Buscar y hacer click en el botón
+                const button = document.querySelector('.charla-float-button');
+                if (button) {
+                    button.click();
+                    alert('Chat abierto');
+                } else {
+                    alert('Botón no encontrado');
+                }
+                
+                updateDebugStatus();
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        function forceInit() {
+            try {
+                if (typeof CharlaAI !== 'undefined') {
+                    window.charlaAI = new CharlaAI();
+                    debugInfo.charlaInitialized = true;
+                    alert('Charla inicializada forzadamente');
+                } else {
+                    alert('CharlaAI no disponible');
+                }
+                updateDebugStatus();
+            } catch (error) {
+                alert(`Error en inicialización forzada: ${error.message}`);
+            }
+        }
+
+        async function showBackend() {
+            try {
+                const response = await fetch('http://localhost/MF0493_3/charla-backend/simple-test.php');
+                if (response.ok) {
+                    debugInfo.backendResponding = true;
+                    alert('Backend responde correctamente');
+                } else {
+                    alert(`Backend error: ${response.status}`);
+                }
+            } catch (error) {
+                alert(`Error de conexión al backend: ${error.message}`);
+            }
+            updateDebugStatus();
+        }
+
+        // Simular el initializeApp() del main.js
+        function initializeCharlaAI() {
+            if (typeof CharlaAI !== 'undefined') {
+                setTimeout(() => {
+                    window.charlaAI = new CharlaAI();
+                    debugInfo.charlaInitialized = true;
+                    console.log('Charla IA inicializada correctamente');
+                    updateDebugStatus();
+                }, 1000);
+            } else {
+                console.warn('CharlaAI no está disponible');
+            }
+        }
+
+        // Ejecutar al cargar
+        window.onload = function() {
+            updateDebugStatus();
+            
+            // Simular la inicialización automática
+            setTimeout(() => {
+                initializeCharlaAI();
+            }, 2000);
+            
+            // Actualizar estado cada 2 segundos
+            setInterval(updateDebugStatus, 2000);
+        };
+
+        // Capturar errores
+        window.onerror = function(msg, url, line, col, error) {
+            console.error('Error:', msg, 'at', url, line);
+        };
+    </script>
+</body>
+</html>

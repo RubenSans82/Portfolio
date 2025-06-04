@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Verificar Hosting InfinityFree</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 20px; border-radius: 10px; }
+        .result { padding: 15px; margin: 10px 0; border-radius: 5px; border-left: 4px solid; }
+        .success { background: #d4edda; border-color: #28a745; color: #155724; }
+        .error { background: #f8d7da; border-color: #dc3545; color: #721c24; }
+        .warning { background: #fff3cd; border-color: #ffc107; color: #856404; }
+        .info { background: #d1ecf1; border-color: #17a2b8; color: #0c5460; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+        .urgent { background: #dc3545; }
+        .urgent:hover { background: #c82333; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; font-size: 12px; }
+        .url-list { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .url-list a { display: block; margin: 5px 0; color: #007bff; text-decoration: none; }
+        .url-list a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Verificar Estado del Hosting InfinityFree</h1>
+        
+        <div class="info">
+            <h3>🎯 Objetivo:</h3>
+            <p>Verificar si los archivos PHP están correctamente subidos a InfinityFree y diagnosticar problemas de conectividad.</p>
+        </div>
+
+        <div class="url-list">
+            <h3>📋 URLs a verificar manualmente:</h3>
+            <a href="https://phprubensans.wuaze.com/" target="_blank">🏠 Raíz del hosting: https://phprubensans.wuaze.com/</a>
+            <a href="https://phprubensans.wuaze.com/index.php" target="_blank">🔧 Backend principal: https://phprubensans.wuaze.com/index.php</a>
+            <a href="https://phprubensans.wuaze.com/test.php" target="_blank">🧪 Test de conectividad: https://phprubensans.wuaze.com/test.php</a>
+            <a href="https://phprubensans.wuaze.com/simple-test.php" target="_blank">📝 Test simple: https://phprubensans.wuaze.com/simple-test.php</a>
+            <a href="https://phprubensans.wuaze.com/config.php" target="_blank">⚙️ Archivo de configuración: https://phprubensans.wuaze.com/config.php</a>
+        </div>
+
+        <div class="warning">
+            <h3>⚠️ IMPORTANTE:</h3>
+            <p>Haz clic en cada URL arriba para abrirla en una nueva pestaña. Si ves errores 404, significa que los archivos NO están subidos.</p>
+        </div>
+
+        <h3>🧪 Tests Automatizados:</h3>
+        <button onclick="checkHostingStatus()">🔍 Verificar Estado General</button>
+        <button onclick="checkCORSHeaders()">🌐 Verificar Headers CORS</button>
+        <button onclick="testWithDifferentMethods()">📡 Probar Diferentes Métodos</button>
+        <button class="urgent" onclick="diagnoseFullProblem()">🚨 Diagnóstico Completo</button>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function addResult(type, title, content) {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `result ${type}`;
+            div.innerHTML = `
+                <h4>${title}</h4>
+                <pre>${content}</pre>
+                <small>⏰ ${new Date().toLocaleTimeString()}</small>
+            `;
+            results.appendChild(div);
+            div.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        async function checkHostingStatus() {
+            addResult('info', '🔍 Verificando Estado del Hosting', 'Comprobando si los archivos están subidos...');
+            
+            const urls = [
+                'https://phprubensans.wuaze.com/',
+                'https://phprubensans.wuaze.com/index.php',
+                'https://phprubensans.wuaze.com/test.php',
+                'https://phprubensans.wuaze.com/simple-test.php'
+            ];
+
+            for (const url of urls) {
+                try {
+                    const response = await fetch(url, { method: 'HEAD' });
+                    const status = response.status;
+                    
+                    if (status === 200) {
+                        addResult('success', `✅ Archivo encontrado: ${url}`, `Status: ${status} - El archivo existe`);
+                    } else if (status === 404) {
+                        addResult('error', `❌ Archivo NO encontrado: ${url}`, `Status: ${status} - El archivo NO está subido`);
+                    } else {
+                        addResult('warning', `⚠️ Estado inesperado: ${url}`, `Status: ${status} - Revisa la configuración`);
+                    }
+                } catch (error) {
+                    addResult('error', `🚫 Error de conexión: ${url}`, `Error: ${error.message}`);
+                }
+            }
+        }
+
+        async function checkCORSHeaders() {
+            addResult('info', '🌐 Verificando Headers CORS', 'Comprobando configuración de CORS...');
+            
+            try {
+                const response = await fetch('https://phprubensans.wuaze.com/test.php');
+                const headers = {};
+                
+                for (let [key, value] of response.headers) {
+                    headers[key] = value;
+                }
+                
+                addResult('info', '📋 Headers de Respuesta', JSON.stringify(headers, null, 2));
+                
+                // Verificar headers CORS específicos
+                const corsHeaders = [
+                    'access-control-allow-origin',
+                    'access-control-allow-methods',
+                    'access-control-allow-headers'
+                ];
+                
+                let corsOk = true;
+                for (const header of corsHeaders) {
+                    if (!headers[header]) {
+                        corsOk = false;
+                        addResult('warning', `⚠️ Header CORS faltante`, `${header} no está presente`);
+                    }
+                }
+                
+                if (corsOk) {
+                    addResult('success', '✅ CORS configurado correctamente', 'Todos los headers necesarios están presentes');
+                }
+                
+            } catch (error) {
+                addResult('error', '❌ Error verificando CORS', error.message);
+            }
+        }
+
+        async function testWithDifferentMethods() {
+            addResult('info', '📡 Probando Diferentes Métodos HTTP', 'Testando GET, POST, OPTIONS...');
+            
+            const methods = ['GET', 'POST', 'OPTIONS'];
+            const baseUrl = 'https://phprubensans.wuaze.com/test.php';
+            
+            for (const method of methods) {
+                try {
+                    const options = {
+                        method: method,
+                        headers: { 'Content-Type': 'application/json' }
+                    };
+                    
+                    if (method === 'POST') {
+                        options.body = JSON.stringify({ test: true });
+                    }
+                    
+                    const response = await fetch(baseUrl, options);
+                    const status = response.status;
+                    const text = await response.text();
+                    
+                    addResult('success', `✅ Método ${method} - Status: ${status}`, 
+                        `Respuesta:\n${text.substring(0, 500)}${text.length > 500 ? '...' : ''}`);
+                        
+                } catch (error) {
+                    addResult('error', `❌ Error con método ${method}`, error.message);
+                }
+            }
+        }
+
+        async function diagnoseFullProblem() {
+            addResult('info', '🚨 DIAGNÓSTICO COMPLETO INICIADO', 'Ejecutando todas las verificaciones...');
+            
+            // 1. Verificar conexión básica
+            try {
+                const response = await fetch('https://phprubensans.wuaze.com/', { method: 'HEAD' });
+                if (response.status === 200) {
+                    addResult('success', '✅ Conexión al hosting OK', 'El dominio responde correctamente');
+                } else {
+                    addResult('error', '❌ Problema de conexión al hosting', `Status: ${response.status}`);
+                    return;
+                }
+            } catch (error) {
+                addResult('error', '🚫 HOSTING NO ACCESIBLE', 'El dominio no responde. Verifica la URL del hosting.');
+                return;
+            }
+
+            // 2. Verificar archivos específicos
+            const files = ['index.php', 'test.php', 'simple-test.php', 'config.php'];
+            let filesFound = 0;
+            
+            for (const file of files) {
+                try {
+                    const response = await fetch(`https://phprubensans.wuaze.com/${file}`, { method: 'HEAD' });
+                    if (response.status === 200) {
+                        filesFound++;
+                        addResult('success', `✅ Archivo encontrado: ${file}`, 'Subido correctamente');
+                    } else {
+                        addResult('error', `❌ Archivo NO encontrado: ${file}`, `Status: ${response.status}`);
+                    }
+                } catch (error) {
+                    addResult('error', `🚫 Error verificando ${file}`, error.message);
+                }
+            }
+
+            // 3. Diagnóstico final
+            if (filesFound === 0) {
+                addResult('error', '🚨 DIAGNÓSTICO FINAL: ARCHIVOS NO SUBIDOS', 
+                    'NINGÚN archivo PHP fue encontrado en el hosting.\n\n' +
+                    'SOLUCIÓN:\n' +
+                    '1. Sube TODOS los archivos de la carpeta chat-backend/ a InfinityFree\n' +
+                    '2. Usa el File Manager de InfinityFree o un cliente FTP\n' +
+                    '3. Asegúrate de que los archivos estén en la carpeta public_html/\n' +
+                    '4. Verifica que las URLs sean correctas');
+            } else if (filesFound < 4) {
+                addResult('warning', '⚠️ DIAGNÓSTICO FINAL: ARCHIVOS PARCIALES', 
+                    `Solo ${filesFound} de 4 archivos fueron encontrados.\n\n` +
+                    'SOLUCIÓN:\n' +
+                    '1. Sube TODOS los archivos faltantes\n' +
+                    '2. Verifica que config.php tenga tu API key de Google');
+            } else {
+                addResult('success', '✅ DIAGNÓSTICO FINAL: ARCHIVOS SUBIDOS CORRECTAMENTE', 
+                    'Todos los archivos están presentes. El problema puede ser:\n\n' +
+                    '1. Configuración de CORS en el hosting\n' +
+                    '2. Restricciones de InfinityFree\n' +
+                    '3. API key de Google inválida\n\n' +
+                    'Procede a probar desde GitHub Pages.');
+            }
+        }
+
+        // Cargar información inicial
+        window.onload = function() {
+            addResult('info', '🔍 Página de Verificación de Hosting Cargada', 
+                'Esta herramienta te ayudará a diagnosticar problemas con tu hosting InfinityFree.\n\n' +
+                'PRIMERO: Haz clic en las URLs de arriba para verificar manualmente.\n' +
+                'DESPUÉS: Usa los botones de test para diagnóstico automático.');
+        };
+    </script>
+</body>
+</html>
