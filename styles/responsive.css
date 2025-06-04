@@ -137,10 +137,13 @@
     flex-direction: column;
     gap: var(--spacing-base);
   }
-  
-  .hero-buttons .btn {
+    .hero-buttons .btn {
     width: 100%;
     justify-content: center;
+  }
+  
+  .scroll-indicator {
+    display: none;
   }
   
   .image-container {
@@ -327,14 +330,19 @@
   .timeline-date {
     font-size: var(--font-size-xs);
   }
-  
   .hero-social {
     justify-content: center;
+    z-index: 5;
+  }
+  
+  .scroll-indicator {
+    display: none;
   }
   
   .social-link {
     width: 45px;
     height: 45px;
+    z-index: 5;
   }
 }
 
