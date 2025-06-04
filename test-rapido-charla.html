@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Rápido - Charla IA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f0f2f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px;
+            width: 100%;
+        }
+        .test-button:hover {
+            background: #005a87;
+        }
+        .result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 4px solid #007cba;
+            min-height: 100px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .warning { color: orange; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Test Rápido - Charla IA</h1>
+        <p>Prueba rápida para verificar que todo funciona correctamente.</p>
+        
+        <button class="test-button" onclick="testProduction()">
+            🌍 Test Producción (InfinityFree)
+        </button>
+        
+        <button class="test-button" onclick="testLocal()">
+            🏠 Test Local (XAMPP)
+        </button>
+        
+        <button class="test-button" onclick="testCharlaIntegration()">
+            💬 Test Integración CharlaAI
+        </button>
+        
+        <div id="results" class="result">Haz clic en un botón para ejecutar el test...</div>
+    </div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const classes = { success: 'success', error: 'error', warning: 'warning' };
+            resultsDiv.innerHTML += `[${timestamp}] <span class="${classes[type] || ''}">${message}</span>\n`;
+        }
+
+        async function testProduction() {
+            resultsDiv.innerHTML = '🌍 Probando producción...\n\n';
+            
+            const urls = [
+                'https://phprubensans.wuaze.com/status.php',
+                'https://phprubensans.wuaze.com/api.php'
+            ];
+
+            for (const url of urls) {
+                try {
+                    log(`🔍 Probando: ${url}`);
+                    const response = await fetch(url);
+                    const text = await response.text();
+                    
+                    if (text.includes('<script') || text.includes('toNumbers')) {
+                        log(`❌ INTERCEPTADO por protección: ${url}`, 'error');
+                        log(`📄 Respuesta: ${text.substring(0, 100)}...`, 'warning');
+                    } else if (response.ok) {
+                        log(`✅ OK: ${url}`, 'success');
+                        log(`📄 Respuesta: ${text.substring(0, 100)}`, 'success');
+                    } else {
+                        log(`❌ Error ${response.status}: ${url}`, 'error');
+                    }
+                } catch (error) {
+                    log(`❌ Error de conexión: ${error.message}`, 'error');
+                }
+                log('');
+            }
+        }
+
+        async function testLocal() {
+            resultsDiv.innerHTML = '🏠 Probando local...\n\n';
+            
+            const urls = [
+                'http://localhost/MF0493_3/charla-backend/status.php',
+                'http://localhost/MF0493_3/charla-backend/api.php'
+            ];
+
+            for (const url of urls) {
+                try {
+                    log(`🔍 Probando: ${url}`);
+                    const response = await fetch(url);
+                    const text = await response.text();
+                    
+                    if (response.ok) {
+                        log(`✅ OK: ${url}`, 'success');
+                        log(`📄 Respuesta: ${text.substring(0, 100)}`, 'success');
+                    } else {
+                        log(`❌ Error ${response.status}: ${url}`, 'error');
+                    }
+                } catch (error) {
+                    log(`❌ Error: ${error.message}`, 'error');
+                    if (error.message.includes('Failed to fetch')) {
+                        log(`💡 ¿XAMPP está funcionando?`, 'warning');
+                    }
+                }
+                log('');
+            }
+        }
+
+        function testCharlaIntegration() {
+            resultsDiv.innerHTML = '💬 Probando integración CharlaAI...\n\n';
+            
+            // Verificar si CharlaAI está disponible
+            if (typeof CharlaAI !== 'undefined') {
+                log('✅ Clase CharlaAI encontrada', 'success');
+                
+                try {
+                    const charla = new CharlaAI();
+                    log('✅ CharlaAI inicializada correctamente', 'success');
+                    log(`⚙️ API URL configurada: ${charla.config.apiUrl}`, 'info');
+                    
+                    // Verificar elementos DOM
+                    setTimeout(() => {
+                        const button = document.querySelector('.charla-float-button');
+                        const container = document.querySelector('.charla-container');
+                        
+                        if (button && container) {
+                            log('✅ Elementos DOM creados correctamente', 'success');
+                            log('✅ Sistema CharlaAI completamente funcional', 'success');
+                        } else {
+                            log('❌ Elementos DOM no encontrados', 'error');
+                        }
+                    }, 1000);
+                    
+                } catch (error) {
+                    log(`❌ Error inicializando CharlaAI: ${error.message}`, 'error');
+                }
+            } else {
+                log('❌ Clase CharlaAI no encontrada', 'error');
+                log('💡 Carga charla.js en tu página HTML', 'warning');
+                log('💡 Ejemplo: <script src="js/charla.js"></script>', 'warning');
+            }
+        }
+
+        // Información inicial
+        resultsDiv.innerHTML = `🎯 Test Rápido Charla IA
+📅 ${new Date().toLocaleString()}
+🌐 Ubicación: ${window.location.href}
+
+Usa los botones arriba para probar diferentes aspectos del sistema.
+
+💡 GUÍA RÁPIDA:
+- Test Producción: Verifica InfinityFree
+- Test Local: Verifica XAMPP local  
+- Test Integración: Verifica JavaScript CharlaAI
+
+¡Selecciona una opción para comenzar!`;
+    </script>
+</body>
+</html>

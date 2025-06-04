@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación Pre-Despliegue - Charla IA</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: #333;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #74b9ff;
+        }
+        .check-section {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #74b9ff;
+            background: #f8f9fa;
+        }
+        .check-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .status-ok { color: #28a745; }
+        .status-warning { color: #ffc107; }
+        .status-error { color: #dc3545; }
+        .status-pending { color: #6c757d; }
+        
+        .button {
+            background: linear-gradient(45deg, #74b9ff, #0984e3);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            background: linear-gradient(45deg, #0984e3, #0056b3);
+            transform: translateY(-2px);
+        }
+        .button.critical {
+            background: linear-gradient(45deg, #e17055, #d63031);
+            font-size: 18px;
+            padding: 15px 30px;
+        }
+        .result-box {
+            background: #1e1e1e;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .next-steps {
+            background: linear-gradient(135deg, #fdcb6e, #e17055);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .file-list {
+            background: #f1f3f4;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #74b9ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Verificación Pre-Despliegue</h1>
+            <h2>Sistema Charla IA - Portfolio Rubén Sans</h2>
+            <p><strong>Estado:</strong> <span id="overall-status">Verificando...</span></p>
+        </div>
+
+        <div class="check-section">
+            <h3>📁 Archivos Backend (charla-backend/)</h3>
+            <div id="backend-files-check">
+                <div class="check-item">
+                    <div class="check-icon status-pending" id="status-index">⏳</div>
+                    <div>
+                        <strong>index.php</strong> - API principal con CORS
+                        <div style="font-size: 0.9em; color: #666;">Endpoint principal para la IA</div>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon status-pending" id="status-api">⏳</div>
+                    <div>
+                        <strong>api.php</strong> - API simplificada
+                        <div style="font-size: 0.9em; color: #666;">Versión limpia sin palabras filtradas</div>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon status-pending" id="status-status">⏳</div>
+                    <div>
+                        <strong>status.php</strong> - Test minimalista
+                        <div style="font-size: 0.9em; color: #666;">Verificación básica de funcionamiento</div>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon status-pending" id="status-simple">⏳</div>
+                    <div>
+                        <strong>simple-test.php</strong> - Test conectividad
+                        <div style="font-size: 0.9em; color: #666;">Prueba de conexión básica</div>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon status-pending" id="status-test">⏳</div>
+                    <div>
+                        <strong>test.php</strong> - Test completo
+                        <div style="font-size: 0.9em; color: #666;">Verificación completa del sistema</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="check-section">
+            <h3>🎨 Archivos Frontend</h3>
+            <div id="frontend-files-check">
+                <div class="check-item">
+                    <div class="check-icon status-pending" id="status-charla-js">⏳</div>
+                    <div>
+                        <strong>js/charla.js</strong> - Clase CharlaAI
+                        <div style="font-size: 0.9em; color: #666;">Lógica principal del chat</div>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon status-pending" id="status-charla-css">⏳</div>
+                    <div>
+                        <strong>styles/charla.css</strong> - Estilos
+                        <div style="font-size: 0.9em; color: #666;">Diseño del chat flotante</div>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon status-pending" id="status-index-html">⏳</div>
+                    <div>
+                        <strong>index.html</strong> - Página principal
+                        <div style="font-size: 0.9em; color: #666;">Portfolio con chat integrado</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="check-section">
+            <h3>🔧 Herramientas de Diagnóstico</h3>
+            <div class="file-list">
+                <div class="file-item">
+                    <span><strong>diagnostico-produccion-completo.html</strong></span>
+                    <span class="status-ok">✅ Listo</span>
+                </div>
+                <div class="file-item">
+                    <span><strong>test-infinityfree-diagnostic.html</strong></span>
+                    <span class="status-ok">✅ Listo</span>
+                </div>
+                <div class="file-item">
+                    <span><strong>CHECKLIST-FINAL-DESPLIEGUE-ACTUALIZADO.md</strong></span>
+                    <span class="status-ok">✅ Listo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="next-steps">
+            <h3>🎯 Próximos Pasos Críticos</h3>
+            <ol>
+                <li><strong>Subir archivos backend a InfinityFree</strong></li>
+                <li><strong>Ejecutar diagnóstico de producción</strong></li>
+                <li><strong>Decidir sobre hosting basado en resultados</strong></li>
+                <li><strong>Desplegar versión final</strong></li>
+            </ol>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="button" onclick="checkLocalFiles()">🔍 Verificar Archivos Locales</button>
+            <button class="button" onclick="testLocalBackend()">🧪 Test Backend Local</button>
+            <button class="button critical" onclick="openDiagnostic()">🚀 Abrir Diagnóstico Completo</button>
+        </div>
+
+        <div id="results" class="result-box" style="display: none;"></div>
+    </div>
+
+    <script>
+        const resultsDiv = document.getElementById('results');
+        
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = { success: '#50fa7b', error: '#ff5555', warning: '#f1fa8c', info: '#8be9fd' };
+            const color = colors[type] || '#f8f8f2';
+            
+            resultsDiv.innerHTML += `<span style="color: ${color}">[${timestamp}] ${message}</span>\n`;
+            resultsDiv.scrollTop = resultsDiv.scrollHeight;
+            resultsDiv.style.display = 'block';
+        }
+
+        function updateStatus(elementId, success, message = '') {
+            const element = document.getElementById(elementId);
+            if (success) {
+                element.textContent = '✅';
+                element.className = 'check-icon status-ok';
+            } else {
+                element.textContent = '❌';
+                element.className = 'check-icon status-error';
+            }
+        }
+
+        async function checkFile(filePath, elementId, description) {
+            try {
+                const response = await fetch(filePath);
+                const success = response.ok;
+                updateStatus(elementId, success);
+                log(`${success ? '✅' : '❌'} ${description}: ${success ? 'OK' : 'No encontrado'}`, success ? 'success' : 'error');
+                return success;
+            } catch (error) {
+                updateStatus(elementId, false);
+                log(`❌ ${description}: Error - ${error.message}`, 'error');
+                return false;
+            }
+        }
+
+        async function checkLocalFiles() {
+            log('🔍 Verificando archivos locales...\n');
+            
+            const files = [
+                { path: 'charla-backend/index.php', id: 'status-index', desc: 'Backend principal' },
+                { path: 'charla-backend/api.php', id: 'status-api', desc: 'API simplificada' },
+                { path: 'charla-backend/status.php', id: 'status-status', desc: 'Status test' },
+                { path: 'charla-backend/simple-test.php', id: 'status-simple', desc: 'Simple test' },
+                { path: 'charla-backend/test.php', id: 'status-test', desc: 'Test completo' },
+                { path: 'js/charla.js', id: 'status-charla-js', desc: 'CharlaAI JavaScript' },
+                { path: 'styles/charla.css', id: 'status-charla-css', desc: 'Estilos Charla' },
+                { path: 'index.html', id: 'status-index-html', desc: 'Página principal' }
+            ];
+
+            let successCount = 0;
+            for (const file of files) {
+                const success = await checkFile(file.path, file.id, file.desc);
+                if (success) successCount++;
+            }
+
+            log(`\n📊 Resumen: ${successCount}/${files.length} archivos encontrados`);
+            
+            if (successCount === files.length) {
+                log('🎉 ¡Todos los archivos están listos!', 'success');
+                document.getElementById('overall-status').textContent = 'Archivos OK - Listo para subir';
+                document.getElementById('overall-status').style.color = '#28a745';
+            } else {
+                log('⚠️ Algunos archivos faltan o tienen problemas', 'warning');
+                document.getElementById('overall-status').textContent = 'Revisar archivos faltantes';
+                document.getElementById('overall-status').style.color = '#ffc107';
+            }
+        }
+
+        async function testLocalBackend() {
+            log('🧪 Probando backend local...\n');
+            
+            const baseUrl = 'http://localhost/MF0493_3/charla-backend/';
+            const endpoints = [
+                { name: 'Status', url: baseUrl + 'status.php' },
+                { name: 'API GET', url: baseUrl + 'api.php' },
+                { name: 'Simple Test', url: baseUrl + 'simple-test.php' },
+                { name: 'Index GET', url: baseUrl + 'index.php' }
+            ];
+
+            let successCount = 0;
+            for (const endpoint of endpoints) {
+                try {
+                    log(`🔍 Probando ${endpoint.name}: ${endpoint.url}`);
+                    const response = await fetch(endpoint.url);
+                    const success = response.ok;
+                    log(`${success ? '✅' : '❌'} ${endpoint.name}: ${response.status} ${response.statusText}`, success ? 'success' : 'error');
+                    
+                    if (success) {
+                        const text = await response.text();
+                        log(`📝 Respuesta: ${text.substring(0, 100)}${text.length > 100 ? '...' : ''}`, 'info');
+                        successCount++;
+                    }
+                } catch (error) {
+                    log(`❌ ${endpoint.name}: ${error.message}`, 'error');
+                }
+                log(''); // Línea vacía
+            }
+
+            log(`📊 Backend Local: ${successCount}/${endpoints.length} endpoints funcionando`);
+            
+            if (successCount === endpoints.length) {
+                log('✅ Backend local funcionando correctamente', 'success');
+                log('🚀 Listo para probar en producción', 'success');
+            } else {
+                log('⚠️ Algunos endpoints locales fallan', 'warning');
+                log('🔧 Revisa la configuración de XAMPP', 'warning');
+            }
+        }
+
+        function openDiagnostic() {
+            log('🚀 Abriendo herramienta de diagnóstico completo...', 'info');
+            window.open('diagnostico-produccion-completo.html', '_blank');
+        }
+
+        // Auto-verificación al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            log('🎯 Sistema de verificación pre-despliegue inicializado');
+            log('📅 Fecha: ' + new Date().toLocaleString());
+            log('🔧 Usa los botones para verificar el estado del sistema\n');
+            
+            // Verificar automáticamente después de 2 segundos
+            setTimeout(() => {
+                log('⚡ Iniciando verificación automática...\n');
+                checkLocalFiles();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
