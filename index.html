@@ -69,11 +69,12 @@
         /* Fix para labels del formulario de contacto */
         .contact-form .form-group {
             position: relative !important;
+            margin-bottom: 25px !important;
         }
         
         .contact-form .form-group label {
             position: absolute !important;
-            top: -8px !important;
+            top: -12px !important;
             left: 12px !important;
             background: transparent !important;
             padding: 0 8px !important;
@@ -84,19 +85,32 @@
             z-index: 10 !important;
         }
         
+        /* Específico para el textarea */
+        .contact-form .form-group:has(textarea) label {
+            top: -22px !important;
+        }
+        
         .contact-form .form-group input,
         .contact-form .form-group textarea {
             position: relative !important;
             z-index: 1 !important;
+            margin-top: 0 !important;
         }
         
         .contact-form .form-group input:focus + label,
         .contact-form .form-group input:valid + label,
         .contact-form .form-group textarea:focus + label,
         .contact-form .form-group textarea:valid + label {
-            top: -12px !important;
+            top: -17px !important;
             font-size: 12px !important;
             color: var(--primary-color, #007bff) !important;
+        }
+        
+        /* Específico para textarea cuando está activo */
+        .contact-form .form-group:has(textarea) input:focus + label,
+        .contact-form .form-group:has(textarea) textarea:focus + label,
+        .contact-form .form-group:has(textarea) textarea:valid + label {
+            top: -27px !important;
         }
     </style>
     
