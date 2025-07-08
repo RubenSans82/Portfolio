@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear Favicon</title>
+</head>
+<body>
+    <canvas id="favicon" width="32" height="32" style="border: 1px solid #ccc;"></canvas>
+    <br><br>
+    <button onclick="downloadFavicon()">Descargar Favicon</button>
+
+    <script>
+        const canvas = document.getElementById('favicon');
+        const ctx = canvas.getContext('2d');
+        
+        // Crear favicon con iniciales RS
+        function createFavicon() {
+            // Fondo gradiente similar al portfolio
+            const gradient = ctx.createLinearGradient(0, 0, 32, 32);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            
+            // Dibujar fondo con bordes ligeramente redondeados
+            ctx.fillStyle = gradient;
+            roundRect(ctx, 0, 0, 32, 32, 4);
+            ctx.fill();
+            
+            // Configurar texto para las iniciales
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 14px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // Dibujar "RS"
+            ctx.fillText('RS', 16, 16);
+        }
+        
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+        
+        function downloadFavicon() {
+            const link = document.createElement('a');
+            link.download = 'favicon.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // Crear el favicon al cargar
+        createFavicon();
+    </script>
+</body>
+</html>

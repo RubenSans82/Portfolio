@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Favicon - Portfolio</title>
+    <style>
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .favicon-canvas {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            cursor: pointer;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        input, select {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            width: 100%;
+            max-width: 150px;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .preview {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .preview-item {
+            text-align: center;
+        }
+        
+        .preview-item canvas {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+        
+        .instructions {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Generador de Favicon para Portfolio</h1>
+        <p>Crea un favicon personalizado para tu portfolio web</p>
+        
+        <canvas id="faviconCanvas" class="favicon-canvas" width="64" height="64"></canvas>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="bgColor">Color de Fondo:</label>
+                <input type="color" id="bgColor" value="#667eea">
+            </div>
+            
+            <div class="control-group">
+                <label for="textColor">Color de Texto:</label>
+                <input type="color" id="textColor" value="#ffffff">
+            </div>
+            
+            <div class="control-group">
+                <label for="iconType">Tipo de Icono:</label>
+                <select id="iconType">
+                    <option value="initials">Iniciales (RS)</option>
+                    <option value="code">Código &lt;/&gt;</option>
+                    <option value="brackets">Llaves { }</option>
+                    <option value="dev">DEV</option>
+                    <option value="portfolio">Portfolio</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="borderRadius">Bordes Redondeados:</label>
+                <input type="range" id="borderRadius" min="0" max="32" value="8">
+            </div>
+        </div>
+        
+        <button onclick="generateFavicon()">🔄 Regenerar</button>
+        <button onclick="downloadFavicon()">💾 Descargar Favicon</button>
+        
+        <div class="preview">
+            <div class="preview-item">
+                <canvas id="favicon16" width="16" height="16"></canvas>
+                <div>16x16</div>
+            </div>
+            <div class="preview-item">
+                <canvas id="favicon32" width="32" height="32"></canvas>
+                <div>32x32</div>
+            </div>
+            <div class="preview-item">
+                <canvas id="favicon64" width="64" height="64"></canvas>
+                <div>64x64</div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>📋 Instrucciones:</h3>
+            <ol>
+                <li>Personaliza los colores y el tipo de icono usando los controles</li>
+                <li>Haz clic en "Regenerar" para actualizar el diseño</li>
+                <li>Cuando estés satisfecho, haz clic en "Descargar Favicon"</li>
+                <li>Guarda el archivo como <code>favicon.ico</code> en la carpeta <code>assets/</code></li>
+                <li>¡Tu portfolio tendrá un favicon personalizado!</li>
+            </ol>
+            <p><strong>Tip:</strong> Los colores por defecto coinciden con el tema de tu portfolio, pero puedes personalizarlos.</p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('faviconCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function generateFavicon() {
+            const bgColor = document.getElementById('bgColor').value;
+            const textColor = document.getElementById('textColor').value;
+            const iconType = document.getElementById('iconType').value;
+            const borderRadius = parseInt(document.getElementById('borderRadius').value);
+            
+            drawFavicon(ctx, 64, bgColor, textColor, iconType, borderRadius);
+            
+            // Generar previews
+            generatePreview('favicon16', 16, bgColor, textColor, iconType, borderRadius);
+            generatePreview('favicon32', 32, bgColor, textColor, iconType, borderRadius);
+            generatePreview('favicon64', 64, bgColor, textColor, iconType, borderRadius);
+        }
+        
+        function generatePreview(canvasId, size, bgColor, textColor, iconType, borderRadius) {
+            const previewCanvas = document.getElementById(canvasId);
+            const previewCtx = previewCanvas.getContext('2d');
+            drawFavicon(previewCtx, size, bgColor, textColor, iconType, borderRadius);
+        }
+        
+        function drawFavicon(context, size, bgColor, textColor, iconType, borderRadius) {
+            // Limpiar canvas
+            context.clearRect(0, 0, size, size);
+            
+            // Dibujar fondo con bordes redondeados
+            if (borderRadius > 0) {
+                roundRect(context, 0, 0, size, size, borderRadius);
+                context.fillStyle = bgColor;
+                context.fill();
+            } else {
+                context.fillStyle = bgColor;
+                context.fillRect(0, 0, size, size);
+            }
+            
+            // Configurar texto
+            context.fillStyle = textColor;
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            
+            let text = '';
+            let fontSize = size * 0.4;
+            
+            switch(iconType) {
+                case 'initials':
+                    text = 'RS';
+                    fontSize = size * 0.35;
+                    context.font = `bold ${fontSize}px Arial, sans-serif`;
+                    break;
+                case 'code':
+                    text = '</>';
+                    fontSize = size * 0.4;
+                    context.font = `bold ${fontSize}px Monaco, 'Courier New', monospace`;
+                    break;
+                case 'brackets':
+                    text = '{ }';
+                    fontSize = size * 0.35;
+                    context.font = `bold ${fontSize}px Monaco, 'Courier New', monospace`;
+                    break;
+                case 'dev':
+                    text = 'DEV';
+                    fontSize = size * 0.22;
+                    context.font = `bold ${fontSize}px Arial, sans-serif`;
+                    break;
+                case 'portfolio':
+                    text = 'P';
+                    fontSize = size * 0.5;
+                    context.font = `bold ${fontSize}px Georgia, serif`;
+                    break;
+            }
+            
+            // Dibujar texto
+            context.fillText(text, size/2, size/2);
+        }
+        
+        function roundRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+        
+        function downloadFavicon() {
+            // Crear canvas de alta resolución para el ICO
+            const downloadCanvas = document.createElement('canvas');
+            downloadCanvas.width = 32;
+            downloadCanvas.height = 32;
+            const downloadCtx = downloadCanvas.getContext('2d');
+            
+            const bgColor = document.getElementById('bgColor').value;
+            const textColor = document.getElementById('textColor').value;
+            const iconType = document.getElementById('iconType').value;
+            const borderRadius = parseInt(document.getElementById('borderRadius').value);
+            
+            drawFavicon(downloadCtx, 32, bgColor, textColor, iconType, borderRadius);
+            
+            // Descargar como PNG (más compatible que ICO para desarrollo web)
+            const link = document.createElement('a');
+            link.download = 'favicon.png';
+            link.href = downloadCanvas.toDataURL('image/png');
+            link.click();
+            
+            alert('¡Favicon descargado! Guárdalo como "favicon.ico" en tu carpeta assets/ y actualiza la página.');
+        }
+        
+        // Listeners para actualización automática
+        document.getElementById('bgColor').addEventListener('change', generateFavicon);
+        document.getElementById('textColor').addEventListener('change', generateFavicon);
+        document.getElementById('iconType').addEventListener('change', generateFavicon);
+        document.getElementById('borderRadius').addEventListener('input', generateFavicon);
+        
+        // Generar favicon inicial
+        generateFavicon();
+    </script>
+</body>
+</html>
