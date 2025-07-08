@@ -65,6 +65,39 @@
         .skill-progress[data-width="65%"] { --progress-width: 65%; }
         .skill-progress[data-width="60%"] { --progress-width: 60%; }
         .skill-progress[data-width="55%"] { --progress-width: 55%; }
+        
+        /* Fix para labels del formulario de contacto */
+        .contact-form .form-group {
+            position: relative !important;
+        }
+        
+        .contact-form .form-group label {
+            position: absolute !important;
+            top: -8px !important;
+            left: 12px !important;
+            background: transparent !important;
+            padding: 0 8px !important;
+            font-size: 14px !important;
+            color: var(--text-color, #666) !important;
+            pointer-events: none !important;
+            transition: all 0.3s ease !important;
+            z-index: 10 !important;
+        }
+        
+        .contact-form .form-group input,
+        .contact-form .form-group textarea {
+            position: relative !important;
+            z-index: 1 !important;
+        }
+        
+        .contact-form .form-group input:focus + label,
+        .contact-form .form-group input:valid + label,
+        .contact-form .form-group textarea:focus + label,
+        .contact-form .form-group textarea:valid + label {
+            top: -12px !important;
+            font-size: 12px !important;
+            color: var(--primary-color, #007bff) !important;
+        }
     </style>
     
     <!-- Favicon -->
